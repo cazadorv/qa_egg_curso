@@ -1,0 +1,5 @@
+git credential-store --file ~/.git-credentials store
+protocol=https
+host=github.com
+username=christianm.vera@gmail.com
+password=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
