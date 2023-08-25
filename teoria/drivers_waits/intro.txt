@@ -1,0 +1,46 @@
+/*
+    En estos ejercicos veremos la diferencia entre los 3 tipos de wait
+    1-Implicit Wait: 
+        La espera implícita se aplica a nivel global para todas las operaciones de búsqueda realizadas en el navegador. 
+        Cuando se establece una espera implícita, Selenium esperará un tiempo determinado antes de lanzar una excepción
+        si un elemento no es encontrado de inmediato. Durante ese tiempo, Selenium buscará repetidamente el elemento.
+        Ejemplo:
+            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); // Espera implícita de 10 segundos
+
+    2-Explicit Wait: Cuando esperamos que se cumpla una condicion
+        La espera explícita permite definir condiciones específicas que deben cumplirse antes de continuar con la ejecución de la prueba. 
+        Se utiliza una instancia de la clase WebDriverWait en combinación con una condición (por ejemplo, espera a que un elemento sea visible) y un tiempo máximo de espera.
+        Ejemplo:
+            import org.openqa.selenium.By;
+            import org.openqa.selenium.WebDriver;
+            import org.openqa.selenium.WebElement;
+            import org.openqa.selenium.support.ui.ExpectedConditions;
+            import org.openqa.selenium.support.ui.WebDriverWait;
+
+            // Crear una instancia de WebDriverWait
+            WebDriverWait wait = new WebDriverWait(driver, 10); // Espera máxima de 10 segundos
+
+            // Utilizar la espera explícita para esperar a que un elemento sea visible
+            WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("element_id")));
+
+
+    3-Fluent Wait: Similar a un wait explicito, pero con mas condiciones como intentos de revision, o cuantos tiempo se debe esperar.
+        Es similar a la espera explícita, pero proporciona una forma más flexible y personalizada de esperar. Puedes definir cómo se debe realizar la espera y cómo manejar excepciones específicas.
+        import org.openqa.selenium.By;
+        import org.openqa.selenium.WebDriver;
+        import org.openqa.selenium.WebElement;
+        import org.openqa.selenium.support.ui.FluentWait;
+        import org.openqa.selenium.support.ui.Wait;
+        import org.openqa.selenium.TimeoutException;
+        import java.time.Duration;
+
+        // Crear una instancia de FluentWait
+        Wait<WebDriver> wait = new FluentWait<>(driver)
+            .withTimeout(Duration.ofSeconds(30)) // Tiempo máximo de espera
+            .pollingEvery(Duration.ofSeconds(5)) // Intervalo de búsqueda
+            .ignoring(TimeoutException.class);    // Excepciones a ignorar
+
+        // Utilizar la espera fluente para esperar a que un elemento esté presente
+        WebElement element = wait.until(driver -> driver.findElement(By.id("element_id")));
+
+ */

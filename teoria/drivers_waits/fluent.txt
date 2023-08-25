@@ -1,0 +1,61 @@
+Fluent Waits
+Características de Fluent Wait
+Personalización de Tiempo de Espera: Puedes definir el tiempo máximo que deseas esperar una condición y la frecuencia con la que quieres verificar la condición.
+
+Ignorar Excepciones Específicas: Puedes configurarlo para ignorar excepciones específicas mientras espera que se cumpla una condición, como NoSuchElementException.
+
+Función Personalizada: Puedes utilizar una función lambda o una implementación de la interfaz Function para definir la condición de espera.
+
+Aplicación en Elemento Específico: A diferencia de la espera implícita, que se aplica a todo el controlador, Fluent Wait se puede aplicar a condiciones muy específicas.
+
+Ejemplo de Uso de Fluent Wait
+Supongamos que quieres esperar a que aparezca un botón de inicio de sesión en una página web, y quieres verificar su presencia cada medio segundo durante un máximo de 10 segundos. Aquí tienes un código de ejemplo:
+
+WebDriver driver = new ChromeDriver(); 
+driver.get("https://www.example.com"); 
+Wait<WebDriver> wait = new FluentWait<WebDriver>(driver) 
+.withTimeout(Duration.ofSeconds(10)) 
+// Tiempo máximo de espera 
+.pollingEvery(Duration.ofMillis(500)) 
+// Frecuencia de verificación 
+.ignoring(NoSuchElementException.class); 
+// Ignorar esta excepción durante la espera 
+WebElement loginButton = wait.until(new Function<WebDriver, WebElement>() { public WebElement apply(WebDriver driver)
+ { return driver.findElement(By.id("loginButton")); // Condición de espera } }); 
+ loginButton.click(); 
+ driver.quit();
+
+En este ejemplo, si el elemento con el ID "loginButton" no está disponible de inmediato, WebDriver esperará hasta 10 segundos,
+ verificando su presencia cada 500 milisegundos. Si el elemento se encuentra disponible antes de que transcurran los 10 segundos,
+  el código continuará ejecutándose sin esperar todo el tiempo establecido.
+
+
+  Métodos para Fluent Wait
+Métodos para Fluent Wait
+Fluent Wait en Selenium permite una gran personalización a través de varios métodos que se pueden utilizar. A continuación, te muestro algunos de los métodos más comunes:
+
+withTimeout(Duration duration): Establece la cantidad máxima de tiempo para esperar una condición. La espera terminará y lanzará una excepción si la condición no se cumple dentro del período de tiempo especificado.
+
+pollingEvery(Duration duration): Establece la frecuencia con la que se debe verificar la condición. Por ejemplo, si la configuras en 500 milisegundos, la condición se verificará cada 500 milisegundos.
+
+ignoring(Class<? extends Throwable> exceptionType): Le dice a Fluent Wait que ignore ciertas excepciones mientras espera que se cumpla una condición. Esto es útil si esperas que una excepción ocurra comúnmente y no quieres que termine la espera.
+
+until(Function<? super T, V> isTrue): Este método acepta una instancia de Function que debe devolver un valor diferente de null o false si la condición se cumple. La espera continuará hasta que se cumpla esta condición o se alcance el tiempo máximo de espera.
+
+withMessage(String message): Este método permite establecer un mensaje personalizado que se incluirá en la excepción si se alcanza el tiempo de espera sin que se cumpla la condición.
+
+until(Predicate<T> isTrue): Similar a until(Function<? super T, V> isTrue), pero acepta un Predicate y continúa la espera hasta que el predicado devuelva true.
+
+Aquí tienes un ejemplo que utiliza varios de estos métodos:
+
+Wait<WebDriver> wait = new FluentWait<WebDriver>(driver) 
+.withTimeout(Duration.ofSeconds(30)) 
+// Tiempo máximo de espera 
+.pollingEvery(Duration.ofSeconds(5)) 
+// Frecuencia de verificación 
+.ignoring(NoSuchElementException.class) 
+// Ignorar esta excepción 
+.withMessage("Elemento no encontrado en el tiempo especificado"); 
+// Mensaje personalizado 
+WebElement element = wait.until(new Function<WebDriver, WebElement>() { public WebElement apply(WebDriver driver)
+ { return driver.findElement(By.id("someElement")); } });

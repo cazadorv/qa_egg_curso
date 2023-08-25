@@ -1,0 +1,83 @@
+Explicit Waits
+Algunas características de los Explicit Waits:
+No aplican a todos los elementos de la página web, solo a los específicos para los cuales están configurados.
+
+Permiten esperar hasta que se cumpla una cierta condición, como la visibilidad de un elemento o la actualización de un atributo.
+
+No se aplican a todo el script de automatización, solo donde los defines.
+
+Puedes especificar distintas condiciones y tiempos de espera para diferentes elementos o acciones.
+
+Aquí tienes un ejemplo de cómo aplicar un explicit wait:
+
+WebDriver driver = new ChromeDriver(); driver.get("https://www.lapaginaquequieras.com"); 
+WebDriverWait wait = new WebDriverWait(driver, 10); 
+// Esperar hasta 10 segundos 
+WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("unElemento"))); 
+// Continuar con las acciones en el elemento...
+
+En este ejemplo, el WebDriver esperará hasta 10 segundos para que el elemento con el ID "unElemento" sea visible. Si el elemento se vuelve visible antes de que transcurran los 10 segundos, el código continuará ejecutándose sin esperar todo el tiempo establecido. Si el elemento no se vuelve visible en 10 segundos, se lanzará una excepción de tiempo de espera (TimeoutException).
+
+Las esperas explícitas son especialmente útiles cuando trabajas con elementos que pueden tardar en cargarse o cambiar de estado, y te permiten especificar condiciones complejas y tiempos de espera personalizados. A diferencia de las esperas implícitas, las explícitas solo se aplican a los elementos y condiciones específicas para los cuales están configuradas, lo que te brinda un mayor control sobre la sincronización de tu script.
+
+Expected Conditions
+Habrás notado que el wait en este caso tiene la sintaxis: Espera N segundos + hasta que + ocurra algo
+
+Este "ocurra algo" es lo que en el código anterior vemos como ExpectedConditions.ALGO
+
+Aquí te compartimos una serie de métodos que definen ese "algo", junto con su descripción:
+
+Las condiciones esperadas (ExpectedConditions) en Selenium son una serie de métodos predefinidos utilizados junto con WebDriverWait para esperar a que ocurra una cierta condición antes de continuar con la ejecución del script. Hay varias condiciones esperadas disponibles que puedes usar, dependiendo de lo que necesites en tu caso de prueba:
+
+elementToBeClickable(By locator)
+: Espera hasta que un elemento sea clickeable.
+
+elementToBeClickable(WebElement element)
+: Espera hasta que un elemento específico sea clickeable.
+
+elementToBeSelected(By locator)
+: Espera hasta que un elemento sea seleccionado.
+
+elementToBeSelected(WebElement element)
+: Espera hasta que un elemento específico sea seleccionado.
+
+frameToBeAvailableAndSwitchToIt(By locator)
+: Espera hasta que esté disponible un marco (frame) y cambia a él.
+
+invisibilityOf(WebElement element)
+: Espera hasta que un elemento específico sea invisible.
+
+invisibilityOfElementLocated(By locator)
+: Espera hasta que un elemento sea invisible.
+
+presenceOfAllElementsLocatedBy(By locator)
+: Espera hasta que estén presentes todos los elementos encontrados por el localizador.
+
+presenceOfElementLocated(By locator)
+: Espera hasta que un elemento esté presente en el DOM.
+
+stalenessOf(WebElement element)
+: Espera hasta que un elemento específico ya no esté presente en el DOM.
+
+textToBePresentInElement(By locator, String text)
+: Espera hasta que el texto especificado esté presente en el elemento encontrado por el localizador.
+
+textToBePresentInElementLocated(By locator, String text)
+: Espera hasta que el texto especificado esté presente en el elemento especificado por el localizador.
+
+textToBePresentInElementValue(By locator, String text)
+: Espera hasta que el texto especificado esté presente en el valor del atributo del elemento encontrado por el localizador.
+
+visibilityOf(WebElement element)
+: Espera hasta que un elemento específico sea visible.
+
+visibilityOfAllElements(List<WebElement> elements)
+: Espera hasta que todos los elementos en la lista estén visibles.
+
+visibilityOfAllElementsLocatedBy(By locator)
+: Espera hasta que todos los elementos encontrados por el localizador estén visibles.
+
+visibilityOfElementLocated(By locator)
+: Espera hasta que un elemento esté visible.
+
+Estas condiciones esperadas ofrecen una gran flexibilidad y permiten manejar una variedad de situaciones en las que podrías necesitar esperar a que algo ocurra en tu página antes de continuar.
